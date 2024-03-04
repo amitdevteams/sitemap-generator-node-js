@@ -1,58 +1,22 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sitemap Generator</title>
+  <meta charset="utf-8" />
+  <title>Getting Started</title>
+  <script src="https://unpkg.com/lodash@4.17.20"></script>
 </head>
 <body>
-    <h1>Sitemap Generator</h1>
-    <form id="crawlForm" action="/crawl" method="POST">
-        <label for="baseUrl">Enter the base URL:</label><br>
-        <input type="text" id="baseUrl" name="baseUrl"><br><br>
-        <button type="submit">Start Crawling</button>
-    </form>
-    <div id="downloadLink" style="display: none;">
-        <h3>Sitemap Generated Successfully!</h3>
-        <a id="downloadButton" href="#" download="sitemap.xml">Download Sitemap</a>
-    </div>
-    <script>
-        document.getElementById('crawlForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const baseUrl = document.getElementById('baseUrl').value.trim();
-            if (baseUrl) {
-                fetch('/crawl', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ baseUrl })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.blob(); // Parse response as Blob
-                })
-                .then(blob => {
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'sitemap.xml';
-                    document.body.appendChild(a); // Append <a> element to the DOM
-                    a.click(); // Programmatically trigger the click event on <a>
-                    a.remove(); // Remove the <a> element from the DOM after download
-                    window.URL.revokeObjectURL(url); // Release the object URL
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Error occurred while crawling!');
-                });
-            } else {
-                alert('Please enter a URL.');
-            }
-        });
-    </script>
+  <h1>Sitemap Generator</h1>
+  <form id="crawlForm" action="/crawl" method="POST">
+      <label for="baseUrl">Enter the base URL:</label><br>
+      <input type="text" id="baseUrl" name="baseUrl"><br><br>
+      <button type="submit">Start Crawling</button>
+  </form>
+  <div id="downloadLink" style="display: none;">
+      <h3>Sitemap Generated Successfully!</h3>
+      <a id="downloadButton" href="#" download="sitemap.xml">Download Sitemap</a>
+  </div>
+  <script src="./src/index.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
